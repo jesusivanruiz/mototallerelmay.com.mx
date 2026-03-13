@@ -128,7 +128,8 @@ async function loadGallery() {
       });
     }
 
-  } catch {
+  } catch (err) {
+    console.error('[Galería] Error al cargar gallery.json:', err);
     renderPlaceholders();
   }
 }
