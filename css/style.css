@@ -11,7 +11,7 @@
     url('../fonts/Berow.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }
 
 *,
@@ -36,6 +36,7 @@
   --font-display: 'Bebas Neue', sans-serif;
   --font-heading: 'Rajdhani', sans-serif;
   --font-body: 'Inter', sans-serif;
+  --font-grunge: 'Berow Grunge', cursive;
   --transition: 0.3s ease;
   --radius: 8px;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
@@ -1486,4 +1487,31 @@ ul {
   .testimonios-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
+}
+
+/* =============================================
+   SCROLL REVEAL
+   ============================================= */
+.revealed {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* =============================================
+   ACCESIBILIDAD
+   ============================================= */
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marcas-track,
+  .hero-bg::before,
+  .hero-scroll span,
+  .whatsapp-fab {
+    animation: none;
+  }
+}
+

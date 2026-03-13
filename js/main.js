@@ -66,15 +66,14 @@ async function loadGallery() {
   }
 
   function renderItems(items) {
-    return items.map((img, idx) => `
-      <div class="galeria-item"
-           data-lightbox="galeria"
-           data-src="img/galeria/${img.file}"
-           data-caption="${img.caption || 'Trabajo en Moto Taller El May'}">
+    return items.map((img) => `
+      <div class="galeria-item">
         <img src="img/galeria/${img.file}"
              alt="${img.caption || 'Reparación de motocicleta en Córdoba Veracruz'}"
              loading="lazy"
-             width="400" height="300" />
+             width="400" height="300"
+             style="cursor:pointer"
+             onclick="openLightbox('img/galeria/${img.file}', '${(img.caption || '').replace(/'/g, "\\'")}')"/>
         ${img.caption ? `<div class="galeria-caption">${img.caption}</div>` : ''}
       </div>`).join('');
   }
@@ -117,12 +116,13 @@ async function loadGallery() {
 
     if (btnVerMas) {
       btnVerMas.addEventListener('click', () => {
+        const previousOffset = offset; // guardar ANTES de loadPage()
         loadPage();
         // Smooth scroll to first new item
         const newItems = grid.querySelectorAll('.galeria-item');
-        if (newItems[offset - GALLERY_PAGE_SIZE]) {
+        if (newItems[previousOffset]) {
           setTimeout(() => {
-            newItems[offset - GALLERY_PAGE_SIZE].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            newItems[previousOffset].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }, 100);
         }
       });
@@ -157,10 +157,7 @@ revealElements.forEach((el, i) => {
   revealObserver.observe(el);
 });
 
-// Add revealed class styles via JS
-const style = document.createElement('style');
-style.textContent = `.revealed { opacity: 1 !important; transform: translateY(0) !important; }`;
-document.head.appendChild(style);
+
 
 // ---- WhatsApp form submit ----
 const form = document.getElementById('contactoForm');
@@ -228,4 +225,43 @@ document.querySelectorAll('.faq-question').forEach(btn => {
 
 // ---- Load gallery on page ready ----
 loadGallery();
+
+// ---- Lightbox nativo ----
+(function () {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    display:none; position:fixed; inset:0; z-index:9000;
+    background:rgba(0,0,0,0.92); align-items:center;
+    justify-content:center; cursor:pointer;
+  `;
+  overlay.innerHTML = `
+    <img id="lb-img" style="max-width:90vw;max-height:88vh;border-radius:8px;display:block;" />
+    <p id="lb-cap" style="position:fixed;bottom:24px;left:0;right:0;text-align:center;
+       color:#ccc;font-family:sans-serif;font-size:0.9rem;padding:0 24px;"></p>
+    <button id="lb-close" aria-label="Cerrar" style="position:fixed;top:20px;right:24px;
+       background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1;">
+      &times;
+    </button>
+  `;
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.id === 'lb-close') close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+
+  function close() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  window.openLightbox = function (src, caption) {
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb-cap').textContent = caption || '';
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+})();
 
