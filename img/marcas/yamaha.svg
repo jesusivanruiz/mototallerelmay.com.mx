@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" fill="#ffffff">
+  <text x="100" y="29" text-anchor="middle" font-family="'Trebuchet MS', Arial, sans-serif" font-weight="900" font-size="26" letter-spacing="8">YAMAHA</text>
+  <line x1="20" y1="35" x2="80" y2="35" stroke="#cc0000" stroke-width="1.5" opacity="0.4"/>
+  <line x1="120" y1="35" x2="180" y2="35" stroke="#cc0000" stroke-width="1.5" opacity="0.4"/>
+</svg>

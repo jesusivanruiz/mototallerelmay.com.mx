@@ -1,0 +1,3 @@
+Este archivo es solo para crear la carpeta. Puedes eliminarlo.
+Las fotos de la galería van en esta carpeta (img/galeria/).
+Formatos soportados: JPG, PNG, WebP

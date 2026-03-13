@@ -1,0 +1,16 @@
+# Cloudflare / deploy artifacts
+.wrangler/
+.output/
+.cache/
+
+# Admin PHP (no subir al repo público)
+admin.php
+admin.html
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+*.swp
