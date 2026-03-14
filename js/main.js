@@ -154,6 +154,7 @@ revealElements.forEach((el, i) => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(24px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  el.style.willChange = 'opacity, transform';
   el.dataset.delay = (i % 4) * 80;
   revealObserver.observe(el);
 });
@@ -196,9 +197,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// ---- Hero parallax subtle effect ----
+// ---- Hero parallax subtle effect (desktop only) ----
 const heroBg = document.querySelector('.hero-bg');
-if (heroBg) {
+if (heroBg && window.innerWidth > 768) {
   window.addEventListener('scroll', () => {
     const scrolled = window.scrollY;
     if (scrolled < window.innerHeight) {
